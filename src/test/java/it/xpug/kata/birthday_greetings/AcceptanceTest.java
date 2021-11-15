@@ -17,7 +17,9 @@ public class AcceptanceTest {
     @Before
     public void setUp() {
         mailServer = SimpleSmtpServer.start(9999);
-        birthdayService = new BirthdayService(new EmailProvider("localhost", 9999), "employee_data.txt");
+        EmailProvider emailProvider = new EmailProvider("localhost", 9999);
+        EmployeeRepository employeeRepository = new EmployeeRepository("employee_data.txt");
+        birthdayService = new BirthdayService(emailProvider, employeeRepository);
     }
 
     @After
