@@ -20,7 +20,7 @@ public class EmployeeRepository {
         BufferedReader in = new BufferedReader(new FileReader(filename));
         for (String row : fileHeadersFilter(in).collect(Collectors.toList())) {
             String[] employeeData = row.split(", ");
-            Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
+            Employee employee = new Employee(new FileField(employeeData[1]), new FileField(employeeData[0]), new FileField(employeeData[2]), new FileField(employeeData[3]));
             employees.add(employee);
         }
         return employees;

@@ -8,11 +8,11 @@ public class Employee {
     private final String firstName;
     private final String email;
 
-    public Employee(String firstName, String lastName, String birthDate, String email) throws ParseException {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = new XDate(birthDate);
-        this.email = email;
+    public Employee(FileField... fields) throws ParseException {
+        this.firstName = fields[0].value;
+        this.lastName = fields[1].value;
+        this.birthDate = new XDate(fields[2].value);
+        this.email = fields[3].value;
     }
 
     public boolean isBirthday(XDate today) {
