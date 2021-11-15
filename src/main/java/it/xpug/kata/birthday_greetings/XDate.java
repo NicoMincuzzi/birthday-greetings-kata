@@ -5,8 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static java.util.GregorianCalendar.DAY_OF_MONTH;
+import static java.util.GregorianCalendar.MONTH;
+
 public class XDate {
-	private final Date date;
+    private final Date date;
 
     public XDate() {
         date = new Date();
@@ -17,11 +20,11 @@ public class XDate {
     }
 
     public int getDay() {
-        return getPartOfDate(GregorianCalendar.DAY_OF_MONTH);
+        return getPartOfDate(DAY_OF_MONTH);
     }
 
     public int getMonth() {
-        return 1 + getPartOfDate(GregorianCalendar.MONTH);
+        return 1 + getPartOfDate(MONTH);
     }
 
     public boolean isSameDay(XDate anotherDate) {
