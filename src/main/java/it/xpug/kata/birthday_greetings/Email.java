@@ -1,19 +1,24 @@
 package it.xpug.kata.birthday_greetings;
 
-import javax.mail.MessagingException;
 import java.util.Objects;
 
 public class Email {
     private final String address;
-    private final EmailProvider emailProvider;
 
-    public Email(EmailProvider emailProvider, String address) {
-        this.emailProvider = emailProvider;
+    public Email(String address) {
         this.address = address;
     }
 
-    public void sendMessage(String subject, String body) throws MessagingException {
-        emailProvider.send(subject, body, address);
+    public String body(String firstName) {
+        return "Happy Birthday, dear %NAME%!".replace("%NAME%", firstName);
+    }
+
+    public String subject() {
+        return "Happy Birthday!";
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     @Override

@@ -19,7 +19,15 @@ public class EmailProvider {
         this.smtpPort = smtpPort;
     }
 
-    public void send(String subject, String body, String recipient) throws MessagingException {
+    public void sendEmailTo(Employee employee) {
+        try {
+            send(employee.emailSubject(), employee.emailBody(), employee.emailRecipient());
+        } catch (MessagingException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private void send(String subject, String body, String recipient) throws MessagingException {
         java.util.Properties props = new java.util.Properties();
         props.put("mail.smtp.host", smtpHost);
         props.put("mail.smtp.port", "" + smtpPort);

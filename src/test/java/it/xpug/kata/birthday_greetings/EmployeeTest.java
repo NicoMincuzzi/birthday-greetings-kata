@@ -7,21 +7,18 @@ import static org.junit.Assert.assertTrue;
 
 
 public class EmployeeTest {
-
-    private final EmailProvider emailProvider = new EmailProvider("localhost", 9999);
-
     @Test
     public void testBirthday() throws Exception {
-        Employee employee = new Employee("foo", "bar", "1990/01/31", new Email(emailProvider, "a@b.c"));
+        Employee employee = new Employee("foo", "bar", "1990/01/31", new Email("a@b.c"));
         assertFalse("not his birthday", employee.isBirthday(new XDate("2008/01/30")));
         assertTrue("his birthday", employee.isBirthday(new XDate("2008/01/31")));
     }
 
     @Test
     public void equality() throws Exception {
-        Employee base = new Employee("First", "Last", "1999/09/01", new Email(emailProvider, "first@last.com"));
-        Employee same = new Employee("First", "Last", "1999/09/01", new Email(emailProvider, "first@last.com"));
-        Employee different = new Employee("First", "Last", "1999/09/01", new Email(emailProvider, "boom@boom.com"));
+        Employee base = new Employee("First", "Last", "1999/09/01", new Email("first@last.com"));
+        Employee same = new Employee("First", "Last", "1999/09/01", new Email("first@last.com"));
+        Employee different = new Employee("First", "Last", "1999/09/01", new Email("boom@boom.com"));
 
         assertFalse(base.equals(null));
         assertFalse(base.equals(""));

@@ -1,10 +1,6 @@
 package it.xpug.kata.birthday_greetings;
 
-import javax.mail.MessagingException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
+import java.util.List;
 
 public class BirthdayService {
 
@@ -14,21 +10,13 @@ public class BirthdayService {
         this.emailProvider = emailProvider;
     }
 
-    public void sendGreetings(String fileName, XDate xDate) throws IOException, ParseException, MessagingException {
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
-        String str;
-        removeHeader(in);
-        while ((str = in.readLine()) != null) {
-            String[] employeeData = str.split(", ");
-            Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], new Email(emailProvider,employeeData[3]));
+    public void sendGreetings(String fileName, XDate xDate) {
+        List<Employee> employees = new EmployeeRepository(new EmployeeDao(fileName)).retrieveAll();
+        for (Employee employee : employees) {
             if (employee.isBirthday(xDate)) {
-                employee.sendEmailTo();
+                emailProvider.sendEmailTo(employee);
             }
         }
-    }
-
-    private void removeHeader(BufferedReader in) throws IOException {
-        in.readLine();
     }
 
 }
