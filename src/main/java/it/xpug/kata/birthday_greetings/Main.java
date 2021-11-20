@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ParseException, MessagingException {
         BirthdayService service = new BirthdayService();
-        service.sendGreetings("employee_data.txt", new XDate(), "localhost", 25);
+        service.sendGreetings("employee_data.txt", new XDate(), new EmailProvider("localhost", 25));
     }
 
 }

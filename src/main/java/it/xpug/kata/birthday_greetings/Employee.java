@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday_greetings;
 
+import javax.mail.MessagingException;
 import java.text.ParseException;
 
 public class Employee {
@@ -20,12 +21,10 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
-    public String getEmail() {
-        return email.getAddress();
-    }
-
-    public String getFirstName() {
-        return firstName;
+    public void sendEmailTo(EmailProvider emailProvider) throws MessagingException {
+        String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", firstName);
+        String subject = "Happy Birthday!";
+        email.sendMessage(emailProvider, subject, body);
     }
 
     @Override

@@ -1,11 +1,6 @@
 package it.xpug.kata.birthday_greetings;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +8,7 @@ import java.text.ParseException;
 
 public class BirthdayService {
 
-    public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort) throws IOException, ParseException, MessagingException {
+    public void sendGreetings(String fileName, XDate xDate, EmailProvider emailProvider) throws IOException, ParseException, MessagingException {
         BufferedReader in = new BufferedReader(new FileReader(fileName));
         String str;
         removeHeader(in);
@@ -21,10 +16,7 @@ public class BirthdayService {
             String[] employeeData = str.split(", ");
             Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], new Email(employeeData[3]));
             if (employee.isBirthday(xDate)) {
-                String recipient = employee.getEmail();
-                String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
-                String subject = "Happy Birthday!";
-                sendMessage(smtpHost, smtpPort, subject, body, recipient);
+                employee.sendEmailTo(emailProvider);
             }
         }
     }
@@ -33,18 +25,4 @@ public class BirthdayService {
         in.readLine();
     }
 
-    private void sendMessage(String smtpHost, int smtpPort, String subject, String body, String recipient) throws MessagingException {
-        java.util.Properties props = new java.util.Properties();
-        props.put("mail.smtp.host", smtpHost);
-        props.put("mail.smtp.port", "" + smtpPort);
-        Session session = Session.getInstance(props, null);
-
-        Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress("sender@here.com"));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-        msg.setSubject(subject);
-        msg.setText(body);
-
-        Transport.send(msg);
-    }
 }

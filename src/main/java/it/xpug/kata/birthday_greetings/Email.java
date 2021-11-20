@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday_greetings;
 
+import javax.mail.MessagingException;
 import java.util.Objects;
 
 public class Email {
@@ -9,8 +10,8 @@ public class Email {
         this.address = address;
     }
 
-    public String getAddress() {
-        return address;
+    public void sendMessage(EmailProvider emailProvider, String subject, String body) throws MessagingException {
+        emailProvider.send(subject, body, address);
     }
 
     @Override
