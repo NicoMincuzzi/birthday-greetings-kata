@@ -5,12 +5,14 @@ import java.util.Objects;
 
 public class Email {
     private final String address;
+    private final EmailProvider emailProvider;
 
-    public Email(String address) {
+    public Email(EmailProvider emailProvider, String address) {
+        this.emailProvider = emailProvider;
         this.address = address;
     }
 
-    public void sendMessage(EmailProvider emailProvider, String subject, String body) throws MessagingException {
+    public void sendMessage(String subject, String body) throws MessagingException {
         emailProvider.send(subject, body, address);
     }
 

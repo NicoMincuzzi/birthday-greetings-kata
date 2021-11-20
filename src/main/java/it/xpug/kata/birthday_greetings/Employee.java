@@ -21,10 +21,10 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
-    public void sendEmailTo(EmailProvider emailProvider) throws MessagingException {
+    public void sendEmailTo() throws MessagingException {
         String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", firstName);
         String subject = "Happy Birthday!";
-        email.sendMessage(emailProvider, subject, body);
+        email.sendMessage(subject, body);
     }
 
     @Override

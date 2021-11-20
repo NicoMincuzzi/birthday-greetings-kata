@@ -8,15 +8,21 @@ import java.text.ParseException;
 
 public class BirthdayService {
 
-    public void sendGreetings(String fileName, XDate xDate, EmailProvider emailProvider) throws IOException, ParseException, MessagingException {
+    private final EmailProvider emailProvider;
+
+    public BirthdayService(EmailProvider emailProvider) {
+        this.emailProvider = emailProvider;
+    }
+
+    public void sendGreetings(String fileName, XDate xDate) throws IOException, ParseException, MessagingException {
         BufferedReader in = new BufferedReader(new FileReader(fileName));
         String str;
         removeHeader(in);
         while ((str = in.readLine()) != null) {
             String[] employeeData = str.split(", ");
-            Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], new Email(employeeData[3]));
+            Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], new Email(emailProvider,employeeData[3]));
             if (employee.isBirthday(xDate)) {
-                employee.sendEmailTo(emailProvider);
+                employee.sendEmailTo();
             }
         }
     }
