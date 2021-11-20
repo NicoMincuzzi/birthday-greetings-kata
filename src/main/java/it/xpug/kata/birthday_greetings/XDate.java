@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 
 public class XDate {
 
-	private Date date;
+	private final Date date;
 
 	public XDate() {
 		date = new Date();
