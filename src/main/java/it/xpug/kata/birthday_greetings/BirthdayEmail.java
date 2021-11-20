@@ -2,10 +2,10 @@ package it.xpug.kata.birthday_greetings;
 
 import java.util.Objects;
 
-public class Email {
+public class BirthdayEmail {
     private final String address;
 
-    public Email(String address) {
+    public BirthdayEmail(String address) {
         this.address = address;
     }
 
@@ -25,7 +25,7 @@ public class Email {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Email email = (Email) o;
+        BirthdayEmail email = (BirthdayEmail) o;
         return Objects.equals(address, email.address);
     }
 

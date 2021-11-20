@@ -10,11 +10,11 @@ import javax.mail.internet.MimeMessage;
 import static javax.mail.Message.RecipientType.TO;
 import static javax.mail.Session.getInstance;
 
-public class EmailProvider {
+public class EmailAdapter {
     private final String smtpHost;
     private final int smtpPort;
 
-    public EmailProvider(String smtpHost, int smtpPort) {
+    public EmailAdapter(String smtpHost, int smtpPort) {
         this.smtpHost = smtpHost;
         this.smtpPort = smtpPort;
     }

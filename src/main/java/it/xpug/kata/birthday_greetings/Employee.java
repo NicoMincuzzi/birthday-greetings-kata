@@ -7,9 +7,9 @@ public class Employee {
     private final XDate birthDate;
     private final String lastName;
     private final String firstName;
-    private final Email email;
+    private final BirthdayEmail email;
 
-    public Employee(String firstName, String lastName, String birthDate, Email email) throws ParseException {
+    public Employee(String firstName, String lastName, String birthDate, BirthdayEmail email) throws ParseException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = new XDate(birthDate);

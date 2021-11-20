@@ -4,9 +4,9 @@ import java.util.List;
 
 public class BirthdayService {
 
-    private final EmailProvider emailProvider;
+    private final EmailAdapter emailProvider;
 
-    public BirthdayService(EmailProvider emailProvider) {
+    public BirthdayService(EmailAdapter emailProvider) {
         this.emailProvider = emailProvider;
     }
 
