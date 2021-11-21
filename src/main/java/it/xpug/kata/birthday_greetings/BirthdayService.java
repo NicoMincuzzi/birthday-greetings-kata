@@ -5,7 +5,7 @@ import java.util.List;
 public class BirthdayService {
 
     private final EmailAdapter emailProvider;
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public BirthdayService(EmailAdapter emailProvider, EmployeeRepository employeeRepository) {
         this.emailProvider = emailProvider;

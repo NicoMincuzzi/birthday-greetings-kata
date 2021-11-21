@@ -17,7 +17,7 @@ public class EmployeeEntity {
 
     public Employee from() {
         try {
-            return new Employee(firstName, lastName, birthDate, new BirthdayEmail(email));
+            return new Employee(firstName, lastName, birthDate, Email.birthdayGreetings(email));
         } catch (ParseException e) {
             throw new RuntimeException();
         }

@@ -1,5 +1,7 @@
 package it.xpug.kata.birthday_greetings;
 
+import javax.mail.Message;
+import javax.mail.Session;
 import java.text.ParseException;
 
 public class Employee {
@@ -7,9 +9,9 @@ public class Employee {
     private final XDate birthDate;
     private final String lastName;
     private final String firstName;
-    private final BirthdayEmail email;
+    private final Email email;
 
-    public Employee(String firstName, String lastName, String birthDate, BirthdayEmail email) throws ParseException {
+    public Employee(String firstName, String lastName, String birthDate, Email email) throws ParseException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = new XDate(birthDate);
@@ -20,16 +22,9 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
-    public String emailBody() {
-        return email.body(firstName);
-    }
-
-    public String emailSubject() {
-        return email.subject();
-    }
-
-    public String emailRecipient() {
-        return email.getAddress();
+    public Message emailMessage(Session session) throws Exception {
+        email.body(firstName);
+        return email.message(session);
     }
 
     @Override
@@ -76,6 +71,5 @@ public class Employee {
             return other.lastName == null;
         } else return lastName.equals(other.lastName);
     }
-
 
 }
