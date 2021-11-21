@@ -5,13 +5,15 @@ import java.util.List;
 public class BirthdayService {
 
     private final EmailAdapter emailProvider;
+    private EmployeeRepository employeeRepository;
 
-    public BirthdayService(EmailAdapter emailProvider) {
+    public BirthdayService(EmailAdapter emailProvider, EmployeeRepository employeeRepository) {
         this.emailProvider = emailProvider;
+        this.employeeRepository = employeeRepository;
     }
 
-    public void sendGreetings(String fileName, XDate xDate) {
-        List<Employee> employees = new EmployeeRepository(new EmployeeDao(fileName)).retrieveAll();
+    public void sendGreetings(XDate xDate) {
+        List<Employee> employees = employeeRepository.retrieveAll();
         for (Employee employee : employees) {
             if (employee.isBirthday(xDate)) {
                 emailProvider.sendEmailTo(employee);
