@@ -16,7 +16,7 @@ public class AcceptanceTest {
 	@Before
 	public void setUp() throws Exception {
 		mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
-		EmployeeRepository employeeRepository = new EmployeeRepository(new EmployeeDao("employee_data.txt"));
+		EmployeeRepository employeeRepository = new EmployeeRepository(new EmployeeDao(new File("employee_data.txt")));
 		birthdayService = new BirthdayService(new EmailAdapter("localhost", NONSTANDARD_PORT), employeeRepository);
 	}
 
