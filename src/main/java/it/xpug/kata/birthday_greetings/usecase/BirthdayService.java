@@ -22,11 +22,8 @@ public class BirthdayService {
                 .filter(it -> it.isBirthday(xDate))
                 .collect(Collectors.toList());
 
-        for (Employee birthdayEmployee : birthdayEmployees) {
-            String recipient = birthdayEmployee.getEmail();
-            String body = "Happy Birthday, dear %NAME%".replace("%NAME%", birthdayEmployee.getFirstName().concat("!"));
-            String subject = "Happy Birthday!";
-            notifyAdapter.send("sender@here.com", subject, body, recipient);
+        for (Employee employee : birthdayEmployees) {
+            notifyAdapter.sendTo(employee);
         }
     }
 }

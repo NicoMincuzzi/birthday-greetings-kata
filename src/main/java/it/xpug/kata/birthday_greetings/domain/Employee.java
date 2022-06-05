@@ -1,16 +1,25 @@
 package it.xpug.kata.birthday_greetings.domain;
 
+import it.xpug.kata.birthday_greetings.infrastructure.BirthdayBodyFormatter;
+import it.xpug.kata.birthday_greetings.infrastructure.BirthdaySubjectFormatter;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import java.text.ParseException;
 
-public class Employee {
-    private final XDate birthDate;
-    private final String lastName;
-    private final String firstName;
-    private final String email;
+import static javax.mail.Message.RecipientType.TO;
 
-    public Employee(String firstName, String lastName, String birthDate, String email) throws ParseException {
-        this.firstName = firstName;
+public class Employee {
+    private final String firstName;
+    private final String lastName;
+    private final XDate birthDate;
+    private final Email email;
+
+    public Employee(String firstName, String lastName, String birthDate, Email email) throws ParseException {
         this.lastName = lastName;
+        this.firstName = firstName;
         this.birthDate = new XDate(birthDate);
         this.email = email;
     }
@@ -19,12 +28,17 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getFirstName() {
-        return firstName;
+    public Message buildBirthdayGreeting(Session session) {
+        try {
+            Message msg = new MimeMessage(session);
+            msg.setFrom(email.sender());
+            msg.setRecipient(TO, email.internetAddress());
+            msg.setSubject(email.subject(new BirthdaySubjectFormatter()));
+            msg.setText(email.body(new BirthdayBodyFormatter(), firstName));
+            return msg;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -36,13 +50,10 @@ public class Employee {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((birthDate == null) ? 0 : birthDate.hashCode());
+        result = prime * result + birthDate.hashCode();
         result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result
-                + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result
-                + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         return result;
     }
 
@@ -55,10 +66,7 @@ public class Employee {
         if (!(obj instanceof Employee))
             return false;
         Employee other = (Employee) obj;
-        if (birthDate == null) {
-            if (other.birthDate != null)
-                return false;
-        } else if (!birthDate.equals(other.birthDate))
+        if (!birthDate.equals(other.birthDate))
             return false;
         if (email == null) {
             if (other.email != null)
@@ -74,6 +82,4 @@ public class Employee {
             return other.lastName == null;
         } else return lastName.equals(other.lastName);
     }
-
-
 }
