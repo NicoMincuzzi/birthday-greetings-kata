@@ -25,7 +25,8 @@ public class EmailNotifyAdapter implements NotifyAdapter {
             props.put("mail.smtp.host", smtpHost);
             props.put("mail.smtp.port", "" + smtpPort);
 
-            send(employee.buildBirthdayGreeting(getInstance(props, null)));
+            EmailMessageFormat messageFormat = new EmailMessageFormat(getInstance(props, null));
+            send(messageFormat.of(employee));
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

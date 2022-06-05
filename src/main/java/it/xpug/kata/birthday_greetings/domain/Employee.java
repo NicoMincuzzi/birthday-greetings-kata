@@ -3,13 +3,7 @@ package it.xpug.kata.birthday_greetings.domain;
 import it.xpug.kata.birthday_greetings.infrastructure.BirthdayBodyFormatter;
 import it.xpug.kata.birthday_greetings.infrastructure.BirthdaySubjectFormatter;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 import java.text.ParseException;
-
-import static javax.mail.Message.RecipientType.TO;
 
 public class Employee {
     private final String firstName;
@@ -28,17 +22,16 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
-    public Message buildBirthdayGreeting(Session session) {
-        try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(email.sender());
-            msg.setRecipient(TO, email.internetAddress());
-            msg.setSubject(email.subject(new BirthdaySubjectFormatter()));
-            msg.setText(email.body(new BirthdayBodyFormatter(), firstName));
-            return msg;
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+    public String subjectBirthdayGreeting() {
+        return email.subject(new BirthdaySubjectFormatter());
+    }
+
+    public String bodyBirthdayGreeting() {
+        return email.body(new BirthdayBodyFormatter(), firstName);
+    }
+
+    public String email(){
+        return email.getAddress();
     }
 
     @Override

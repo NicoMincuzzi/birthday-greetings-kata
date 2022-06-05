@@ -2,9 +2,6 @@ package it.xpug.kata.birthday_greetings.domain;
 
 import it.xpug.kata.birthday_greetings.infrastructure.BirthdaySubjectFormatter;
 
-import javax.mail.Address;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.util.Objects;
 
 public class Email {
@@ -14,20 +11,16 @@ public class Email {
         this.address = address;
     }
 
-    public String body(EmailFormatter formatter, String firstName) {
-        return formatter.format(firstName);
+    public String getAddress() {
+        return address;
     }
 
     public String subject(BirthdaySubjectFormatter birthdaySubjectFormatter) {
         return birthdaySubjectFormatter.format("");
     }
 
-    public Address internetAddress() throws AddressException {
-        return new InternetAddress(address);
-    }
-
-    public Address sender() throws AddressException {
-        return new InternetAddress("sender@here.com");
+    public String body(EmailFormatter formatter, String firstName) {
+        return formatter.format(firstName);
     }
 
     @Override
