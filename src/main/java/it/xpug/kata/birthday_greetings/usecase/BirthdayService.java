@@ -2,26 +2,22 @@ package it.xpug.kata.birthday_greetings.usecase;
 
 import it.xpug.kata.birthday_greetings.domain.Employee;
 import it.xpug.kata.birthday_greetings.domain.EmployeeRepository;
+import it.xpug.kata.birthday_greetings.domain.NotifyAdapter;
 import it.xpug.kata.birthday_greetings.domain.XDate;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BirthdayService {
-
     private final EmployeeRepository employeeRepository;
+    private final NotifyAdapter notifyAdapter;
 
-    public BirthdayService(EmployeeRepository employeeRepository) {
+    public BirthdayService(EmployeeRepository employeeRepository, NotifyAdapter notifyAdapter) {
         this.employeeRepository = employeeRepository;
+        this.notifyAdapter = notifyAdapter;
     }
 
-    public void sendGreetings(XDate xDate, String smtpHost, int smtpPort) throws MessagingException {
+    public void sendGreetings(XDate xDate) {
         List<Employee> birthdayEmployees = employeeRepository.readAll().stream()
                 .filter(it -> it.isBirthday(xDate))
                 .collect(Collectors.toList());
@@ -30,25 +26,7 @@ public class BirthdayService {
             String recipient = birthdayEmployee.getEmail();
             String body = "Happy Birthday, dear %NAME%".replace("%NAME%", birthdayEmployee.getFirstName().concat("!"));
             String subject = "Happy Birthday!";
-            sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
+            notifyAdapter.send("sender@here.com", subject, body, recipient);
         }
-    }
-
-    private void sendMessage(String smtpHost, int smtpPort, String sender, String subject, String body, String recipient) throws MessagingException {
-        // Create a mail session
-        java.util.Properties props = new java.util.Properties();
-        props.put("mail.smtp.host", smtpHost);
-        props.put("mail.smtp.port", "" + smtpPort);
-        Session session = Session.getInstance(props, null);
-
-        // Construct the message
-        Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(sender));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-        msg.setSubject(subject);
-        msg.setText(body);
-
-        // Send the message
-        Transport.send(msg);
     }
 }
