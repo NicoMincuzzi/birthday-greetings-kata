@@ -1,4 +1,4 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthday_greetings.domain;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,8 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class XDate {
-
-	private Date date;
+	private final Date date;
 
 	public XDate() {
 		date = new Date();
