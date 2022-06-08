@@ -9,7 +9,7 @@ public class Employee {
     private final String firstName;
     private final String lastName;
     private final XDate birthDate;
-    private final Email email;
+    private final Email email; //REVIEW: Are you sure that it's useful???
 
     public Employee(String firstName, String lastName, String birthDate, Email email) throws ParseException {
         this.lastName = lastName;
@@ -22,15 +22,17 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
+    //REVIEW: This method is not clear! Employee is coupled with Email object
     public String subjectBirthdayGreeting() {
         return email.subject(new BirthdaySubjectFormatter());
     }
 
+    //REVIEW: This method is not clear! Employee is coupled with Email object
     public String bodyBirthdayGreeting() {
         return email.body(new BirthdayBodyFormatter(), firstName);
     }
 
-    public String email(){
+    public String email() {
         return email.getAddress();
     }
 

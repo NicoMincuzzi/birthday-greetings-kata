@@ -23,6 +23,7 @@ public class BirthdayService {
                 .collect(Collectors.toList());
 
         for (Employee employee : birthdayEmployees) {
+            //REVIEW: It's not DIP!!! You're tied an high-level module(NotifyAdapter) to a low-level module (Employee)
             notifyAdapter.sendTo(employee);
         }
     }
