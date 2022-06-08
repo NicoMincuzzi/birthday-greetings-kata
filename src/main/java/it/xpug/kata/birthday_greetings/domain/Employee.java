@@ -1,17 +1,14 @@
 package it.xpug.kata.birthday_greetings.domain;
 
-import it.xpug.kata.birthday_greetings.infrastructure.BirthdayBodyFormatter;
-import it.xpug.kata.birthday_greetings.infrastructure.BirthdaySubjectFormatter;
-
 import java.text.ParseException;
 
 public class Employee {
     private final String firstName;
     private final String lastName;
     private final XDate birthDate;
-    private final Email email; //REVIEW: Are you sure that it's useful???
+    private final String email;
 
-    public Employee(String firstName, String lastName, String birthDate, Email email) throws ParseException {
+    public Employee(String firstName, String lastName, String birthDate, String email) throws ParseException {
         this.lastName = lastName;
         this.firstName = firstName;
         this.birthDate = new XDate(birthDate);
@@ -22,18 +19,12 @@ public class Employee {
         return today.isSameDay(birthDate);
     }
 
-    //REVIEW: This method is not clear! Employee is coupled with Email object
-    public String subjectBirthdayGreeting() {
-        return email.subject(new BirthdaySubjectFormatter());
+    public String getEmail() {
+        return email;
     }
 
-    //REVIEW: This method is not clear! Employee is coupled with Email object
-    public String bodyBirthdayGreeting() {
-        return email.body(new BirthdayBodyFormatter(), firstName);
-    }
-
-    public String email() {
-        return email.getAddress();
+    public String getFirstName() {
+        return firstName;
     }
 
     @Override

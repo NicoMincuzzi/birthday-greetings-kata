@@ -1,5 +1,5 @@
 package it.xpug.kata.birthday_greetings.domain;
 
 public interface NotifyAdapter {
-    void sendTo(Employee employee);
+    void sendTo(String recipient, MessageFormat message);
 }

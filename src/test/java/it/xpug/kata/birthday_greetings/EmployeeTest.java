@@ -1,32 +1,30 @@
 package it.xpug.kata.birthday_greetings;
 
-import it.xpug.kata.birthday_greetings.domain.Email;
 import it.xpug.kata.birthday_greetings.domain.Employee;
 import it.xpug.kata.birthday_greetings.domain.XDate;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class EmployeeTest {
 
     @Test
     public void testBirthday() throws Exception {
-        Employee employee = new Employee("foo", "bar", "1990/01/31", new Email("a@b.c"));
+        Employee employee = new Employee("foo", "bar", "1990/01/31", "a@b.c");
         assertFalse("not his birthday", employee.isBirthday(new XDate("2008/01/30")));
         assertTrue("his birthday", employee.isBirthday(new XDate("2008/01/31")));
     }
 
     @Test
     public void equality() throws Exception {
-        Employee base = new Employee("First", "Last", "1999/09/01", new Email("first@last.com"));
-        Employee same = new Employee("First", "Last", "1999/09/01", new Email("first@last.com"));
-        Employee different = new Employee("First", "Last", "1999/09/01", new Email("boom@boom.com"));
+        Employee base = new Employee("First", "Last", "1999/09/01", "first@last.com");
+        Employee same = new Employee("First", "Last", "1999/09/01", "first@last.com");
+        Employee different = new Employee("First", "Last", "1999/09/01", "boom@boom.com");
 
-        assertFalse(base.equals(null));
-        assertFalse(base.equals(""));
-        assertTrue(base.equals(same));
-        assertFalse(base.equals(different));
+        assertNotEquals(null, base);
+        assertNotEquals("", base);
+        assertEquals(base, same);
+        assertNotEquals(base, different);
     }
 }

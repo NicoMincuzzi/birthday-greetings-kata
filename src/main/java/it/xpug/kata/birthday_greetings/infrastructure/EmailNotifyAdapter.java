@@ -1,11 +1,15 @@
 package it.xpug.kata.birthday_greetings.infrastructure;
 
-import it.xpug.kata.birthday_greetings.domain.Employee;
+import it.xpug.kata.birthday_greetings.domain.MessageFormat;
 import it.xpug.kata.birthday_greetings.domain.NotifyAdapter;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+import static javax.mail.Message.RecipientType.TO;
 import static javax.mail.Session.getInstance;
 import static javax.mail.Transport.send;
 
@@ -19,14 +23,18 @@ public class EmailNotifyAdapter implements NotifyAdapter {
     }
 
     @Override
-    public void sendTo(Employee employee) {
+    public void sendTo(String recipient, MessageFormat message) {
         try {
             Properties props = new Properties();
             props.put("mail.smtp.host", smtpHost);
             props.put("mail.smtp.port", "" + smtpPort);
 
-            EmailMessageFormat messageFormat = new EmailMessageFormat(getInstance(props, null));
-            send(messageFormat.of(employee));
+            Message msg = new MimeMessage(getInstance(props, null));
+            msg.setFrom(new InternetAddress("sender@here.com"));
+            msg.setRecipient(TO, new InternetAddress(recipient));
+            msg.setSubject(message.getSubject());
+            msg.setText(message.getBody());
+            send(msg);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
