@@ -19,11 +19,7 @@ public class BirthdayService {
                 continue;
             }
 
-            String recipient = employee.getEmail();
-            String body = new BirthdayBodyFormatter().format(employee.getFirstName());
-            String subject = new BirthdaySubjectFormatter().format(employee.getFirstName());
-
-            sender.send(subject, body, recipient);
+            sender.sendTo(employee);
         }
     }
 }

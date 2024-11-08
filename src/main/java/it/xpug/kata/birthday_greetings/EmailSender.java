@@ -22,16 +22,19 @@ public class EmailSender implements Sender {
     }
 
     @Override
-    public void send(String subject, String body, String recipient) {
+    public void sendTo(Employee employee) {
         try {
             java.util.Properties props = new java.util.Properties();
             props.put("mail.smtp.host", smtpHost);
             props.put("mail.smtp.port", "" + smtpPort);
             Session session = Session.getInstance(props, null);
 
+            String body = new BirthdayBodyFormatter().format(employee.getFirstName());
+            String subject = new BirthdaySubjectFormatter().format(employee.getFirstName());
+
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(this.senderEmail));
-            msg.setRecipient(TO, new InternetAddress(recipient));
+            msg.setRecipient(TO, new InternetAddress(employee.getEmail()));
             msg.setSubject(subject);
             msg.setText(body);
 
