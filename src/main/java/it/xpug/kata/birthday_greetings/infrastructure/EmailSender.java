@@ -1,4 +1,8 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthday_greetings.infrastructure;
+
+import it.xpug.kata.birthday_greetings.domain.BirthdayBodyFormatter;
+import it.xpug.kata.birthday_greetings.domain.BirthdaySubjectFormatter;
+import it.xpug.kata.birthday_greetings.domain.Employee;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;

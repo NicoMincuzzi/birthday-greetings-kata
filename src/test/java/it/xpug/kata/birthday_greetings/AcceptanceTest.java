@@ -2,6 +2,10 @@ package it.xpug.kata.birthday_greetings;
 
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
+import it.xpug.kata.birthday_greetings.domain.XDate;
+import it.xpug.kata.birthday_greetings.infrastructure.EmailSender;
+import it.xpug.kata.birthday_greetings.infrastructure.EmployeeFileRepository;
+import it.xpug.kata.birthday_greetings.usecase.BirthdayService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

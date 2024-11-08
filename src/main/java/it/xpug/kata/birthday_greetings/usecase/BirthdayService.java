@@ -1,4 +1,9 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthday_greetings.usecase;
+
+import it.xpug.kata.birthday_greetings.domain.Employee;
+import it.xpug.kata.birthday_greetings.domain.EmployeeRepository;
+import it.xpug.kata.birthday_greetings.infrastructure.Sender;
+import it.xpug.kata.birthday_greetings.domain.XDate;
 
 import java.util.List;
 
