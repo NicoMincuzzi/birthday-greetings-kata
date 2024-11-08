@@ -2,6 +2,7 @@ package it.xpug.kata.birthday_greetings;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,19 @@ public class EmployeeFileRepository implements EmployeeRepository {
         List<Employee> employees = new ArrayList<>();
 
         try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
-            String str = "";
-            str = in.readLine(); // skip header
-            while ((str = in.readLine()) != null) {
-                String[] employeeData = str.split(", ");
-                employees.add(Employee.from(employeeData));
+            removeHeader(in);
+            String employee;
+            while ((employee = in.readLine()) != null) {
+                employees.add(Employee.from(employee));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return employees;
+    }
+
+    private void removeHeader(BufferedReader in) throws IOException {
+        in.readLine();
     }
 
 }

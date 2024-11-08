@@ -28,7 +28,8 @@ public class Employee {
         return firstName;
     }
 
-    public static Employee from(String[] employeeData) throws ParseException {
+    public static Employee from(String employee) throws ParseException {
+        String[] employeeData = employee.split(", ");
         return new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
     }
 
