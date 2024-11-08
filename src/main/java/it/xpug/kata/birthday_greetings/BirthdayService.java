@@ -1,25 +1,20 @@
 package it.xpug.kata.birthday_greetings;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
+import java.util.List;
 
 public class BirthdayService {
 
     private final Sender sender;
+    private final EmployeeRepository employeeRepository;
 
-    public BirthdayService(Sender sender) {
+    public BirthdayService(Sender sender, EmployeeRepository employeeRepository) {
         this.sender = sender;
+        this.employeeRepository = employeeRepository;
     }
 
-    public void sendGreetings(String fileName, XDate xDate) throws IOException, ParseException {
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
-        String str = "";
-        str = in.readLine(); // skip header
-        while ((str = in.readLine()) != null) {
-            String[] employeeData = str.split(", ");
-            Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
+    public void sendGreetings(XDate xDate) {
+        List<Employee> employees = employeeRepository.findAll();
+        for (Employee employee : employees) {
             if (employee.isBirthday(xDate)) {
                 String recipient = employee.getEmail();
                 String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
