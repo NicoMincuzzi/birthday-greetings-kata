@@ -20,7 +20,7 @@ public class BirthdayService {
                 String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
                 String subject = "Happy Birthday!";
 
-                sender.send("sender@here.com", subject, body, recipient);
+                sender.send(subject, body, recipient);
             }
         }
     }
