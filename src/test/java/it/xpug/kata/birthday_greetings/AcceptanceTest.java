@@ -2,9 +2,11 @@ package it.xpug.kata.birthday_greetings;
 
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
+import it.xpug.kata.birthday_greetings.domain.EmailApiAdapter;
 import it.xpug.kata.birthday_greetings.domain.XDate;
 import it.xpug.kata.birthday_greetings.infrastructure.EmailSender;
 import it.xpug.kata.birthday_greetings.infrastructure.EmployeeFileRepository;
+import it.xpug.kata.birthday_greetings.infrastructure.JMAAdapter;
 import it.xpug.kata.birthday_greetings.infrastructure.SmtpServerConfiguration;
 import it.xpug.kata.birthday_greetings.usecase.BirthdayService;
 import org.junit.After;
@@ -24,7 +26,8 @@ public class AcceptanceTest {
     public void setUp() {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
         SmtpServerConfiguration smtpServerConfiguration = new SmtpServerConfiguration("localhost", NONSTANDARD_PORT);
-        birthdayService = new BirthdayService(new EmailSender(smtpServerConfiguration, "sender@here.com"), new EmployeeFileRepository("employee_data.txt"));
+        EmailApiAdapter emailApiAdapter = new JMAAdapter(smtpServerConfiguration);
+        birthdayService = new BirthdayService(new EmailSender("sender@here.com", emailApiAdapter), new EmployeeFileRepository("employee_data.txt"));
     }
 
     @After

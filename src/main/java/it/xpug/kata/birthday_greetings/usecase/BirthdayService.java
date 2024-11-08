@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday_greetings.usecase;
 
+import it.xpug.kata.birthday_greetings.domain.BirthdayEmailFormatter;
 import it.xpug.kata.birthday_greetings.domain.Employee;
 import it.xpug.kata.birthday_greetings.domain.EmployeeRepository;
 import it.xpug.kata.birthday_greetings.infrastructure.Sender;
@@ -24,7 +25,7 @@ public class BirthdayService {
                 continue;
             }
 
-            sender.sendTo(employee);
+            sender.sendTo(employee, new BirthdayEmailFormatter());
         }
     }
 }
