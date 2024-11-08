@@ -5,6 +5,7 @@ import com.dumbster.smtp.SmtpMessage;
 import it.xpug.kata.birthday_greetings.domain.XDate;
 import it.xpug.kata.birthday_greetings.infrastructure.EmailSender;
 import it.xpug.kata.birthday_greetings.infrastructure.EmployeeFileRepository;
+import it.xpug.kata.birthday_greetings.infrastructure.SmtpServerConfiguration;
 import it.xpug.kata.birthday_greetings.usecase.BirthdayService;
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +23,8 @@ public class AcceptanceTest {
     @Before
     public void setUp() {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
-        birthdayService = new BirthdayService(new EmailSender("localhost", NONSTANDARD_PORT, "sender@here.com"), new EmployeeFileRepository("employee_data.txt"));
+        SmtpServerConfiguration smtpServerConfiguration = new SmtpServerConfiguration("localhost", NONSTANDARD_PORT);
+        birthdayService = new BirthdayService(new EmailSender(smtpServerConfiguration, "sender@here.com"), new EmployeeFileRepository("employee_data.txt"));
     }
 
     @After
