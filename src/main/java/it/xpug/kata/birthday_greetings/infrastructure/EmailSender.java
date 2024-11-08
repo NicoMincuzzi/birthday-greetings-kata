@@ -16,11 +16,8 @@ public class EmailSender implements Sender {
 
     @Override
     public void sendTo(Employee employee, MessageFormatter messageFormatter) {
-        String body = messageFormatter.body(employee.getFirstName());
-        String subject = messageFormatter.subject();
+        EmailMessage emailMessage = new EmailMessage(senderEmail, employee);
 
-        EmailMessage emailMessage = new EmailMessage(senderEmail, employee.getEmail(), body, subject);
-
-        emailApiAdapter.send(emailMessage);
+        emailApiAdapter.send(emailMessage, messageFormatter);
     }
 }

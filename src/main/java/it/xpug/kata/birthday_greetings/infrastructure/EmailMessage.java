@@ -1,16 +1,16 @@
 package it.xpug.kata.birthday_greetings.infrastructure;
 
-public class EmailMessage {
-    private final String senderEmail;
-    private final String email;
-    private final String body;
-    private final String subject;
+import it.xpug.kata.birthday_greetings.domain.Employee;
+import it.xpug.kata.birthday_greetings.domain.MessageFormatter;
 
-    public EmailMessage(String senderEmail, String email, String body, String subject) {
+public class EmailMessage {
+
+    private final String senderEmail;
+    private final Employee employee;
+
+    public EmailMessage(String senderEmail, Employee employee) {
         this.senderEmail = senderEmail;
-        this.email = email;
-        this.body = body;
-        this.subject = subject;
+        this.employee = employee;
     }
 
     public String getSenderEmail() {
@@ -18,14 +18,14 @@ public class EmailMessage {
     }
 
     public String getEmail() {
-        return email;
+        return employee.getEmail();
     }
 
-    public String getBody() {
-        return body;
+    public String getBody(MessageFormatter messageFormatter) {
+        return messageFormatter.body(employee.getFirstName());
     }
 
-    public String getSubject() {
-        return subject;
+    public String getSubject(MessageFormatter messageFormatter) {
+        return messageFormatter.subject();
     }
 }

@@ -4,5 +4,5 @@ import it.xpug.kata.birthday_greetings.infrastructure.EmailMessage;
 
 public interface EmailApiAdapter {
 
-    void send(EmailMessage emailMessage);
+    void send(EmailMessage emailMessage, MessageFormatter messageFormatter);
 }
