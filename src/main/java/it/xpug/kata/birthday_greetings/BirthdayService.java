@@ -15,13 +15,15 @@ public class BirthdayService {
     public void sendGreetings(XDate xDate) {
         List<Employee> employees = employeeRepository.findAll();
         for (Employee employee : employees) {
-            if (employee.isBirthday(xDate)) {
-                String recipient = employee.getEmail();
-                String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
-                String subject = "Happy Birthday!";
-
-                sender.send(subject, body, recipient);
+            if (!employee.isBirthday(xDate)) {
+                continue;
             }
+
+            String recipient = employee.getEmail();
+            String body = new BirthdayBodyFormatter().format(employee.getFirstName());
+            String subject = new BirthdaySubjectFormatter().format(employee.getFirstName());
+
+            sender.send(subject, body, recipient);
         }
     }
 }

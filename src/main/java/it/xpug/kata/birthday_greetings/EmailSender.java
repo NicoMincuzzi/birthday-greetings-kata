@@ -1,20 +1,19 @@
 package it.xpug.kata.birthday_greetings;
 
 import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import static javax.mail.Message.RecipientType.*;
+import static javax.mail.Message.RecipientType.TO;
 
 public class EmailSender implements Sender {
 
-    private String smtpHost;
-    private int smtpPort;
-    private String senderEmail;
+    private final String smtpHost;
+    private final int smtpPort;
+    private final String senderEmail;
 
     public EmailSender(String smtpHost, int smtpPort, String senderEmail) {
         this.smtpHost = smtpHost;
